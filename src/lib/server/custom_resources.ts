@@ -400,6 +400,7 @@ async function loadResourcePacks() {
 
         if (property == "items" || property == "matchItems") {
           const itemName = properties[property].trim().replace("minecraft:", "").split(":")[0];
+          const a = mcData.items
           const item = mcData.itemsByName[itemName];
           if (item) {
             texture.id = item.id;

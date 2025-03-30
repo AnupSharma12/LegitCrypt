@@ -360,7 +360,8 @@ async function renderHead(textureId: string, scale: number) {
  * @param {string} color
  * @returns Image of a rendered armor piece
  */
-export async function getArmor(type: string, color: string) {
+export async function getArmor(type: string, color: string, newTexture: boolean) {
+  type = newTexture ? `${type}_new` : type;
   const filePath = helper.getCacheFilePath(CACHE_PATH, `leather`, `${type}_${color}`);
   let file;
 

@@ -55,5 +55,13 @@ export const packConfigs: PackConfig = [
     version: "v1.4.1",
     author: "Skeletony_",
     folder: "Worlds_and_Beyond_1_4_1"
+  },
+  {
+    id: "VANILLA_LTS",
+    link: "https://minecraft.net/",
+    name: "Vanilla 1.20",
+    version: "v1.20.6",
+    author: "Mojang",
+    folder: "Vanilla_1_20"
   }
 ];

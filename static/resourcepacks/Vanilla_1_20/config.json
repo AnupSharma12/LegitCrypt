@@ -1,0 +1,8 @@
+{
+  "id": "VANILLA_LTS",
+  "name": "Vanilla 1.20",
+  "author": "Mojang",
+  "url": "https://minecraft.net/",
+  "priority": 10,
+  "default": true
+}
