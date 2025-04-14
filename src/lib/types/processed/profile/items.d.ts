@@ -225,9 +225,12 @@ export type GetItemsItems = {
   fishing_bag: ProcessedItem[];
   potion_bag: ProcessedItem[];
   quiver: ProcessedItem[];
-  // candy_inventory: ProcessedItem[];
   museumItems: ProcessedItem[];
   museum: ProcessedItem[];
+  sacks_bag: ProcessedItem[];
+  candy_inventory: ProcessedItem[];
+  carnival_mask_inventory: ProcessedItem[];
+  sacks: Record<string, number>;
 };
 
 export type Items = {

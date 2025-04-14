@@ -5,8 +5,8 @@ import { getEquipment } from "$lib/server/stats/items/equipment";
 import { processItems } from "$lib/server/stats/items/processing";
 import { getWardrobe } from "$lib/server/stats/items/wardrobe";
 import type { GetItemsItems, Member, MuseumRaw } from "$types/global";
-import { getItemNetworth } from "skyhelper-networth";
-import { addToItemLore, formatNumber } from "../helper";
+//  import { getItemNetworth } from "skyhelper-networth";
+// import { addToItemLore, formatNumber } from "../helper";
 import { sendWebhookMessage } from "../lib";
 import { getPets, getSkilllTools, getWeapons } from "./items/category";
 import { decodeItems } from "./items/decoding";
@@ -16,6 +16,7 @@ import { getMuseumItems } from "./museum";
 export async function getItems(userProfile: Member, userMuseum: MuseumRaw | null, packs: string[]): GetItemsItems {
   try {
     const INVENTORY = userProfile.inventory;
+    // const SHARED_INVENTORIES = userProfile.shared_inventory;
     const RIFT_INVENTORY = userProfile.rift?.inventory;
     const outputPromises = {
       // INVENTORIES
@@ -38,6 +39,10 @@ export async function getItems(userProfile: Member, userMuseum: MuseumRaw | null
       fishing_bag: INVENTORY?.bag_contents?.fishing_bag?.data ?? "",
       // sacks_bag: INVENTORY?.bag_contents?.sacks_bag?.data ?? "",
       quiver: INVENTORY?.bag_contents?.quiver?.data ?? "",
+
+      // SHARED INVENTORIY
+      // candy_inventory: SHARED_INVENTORIES?.candy_inventory?.data ?? "",
+      // carnival_mask_inventory: SHARED_INVENTORIES?.carnival_mask_inventory?.data ?? "",
 
       // BACKPACKS
       ...Object.entries(INVENTORY?.backpack_contents ?? {}).reduce((acc, [key, value]) => {
@@ -83,12 +88,13 @@ export async function getItems(userProfile: Member, userMuseum: MuseumRaw | null
             containsItems: value
           });
 
-          const filteredItems = value.filter((item) => item.tag || item.exp);
+          /*const filteredItems = value.filter((item) => item.tag || item.exp);
           const itemNetworthPromises = filteredItems.map((item) => getItemNetworth(item, { cache: true })).concat(getItemNetworth(backpackIcon));
           const itemNetworth = await Promise.all(itemNetworthPromises);
           const totalValue = itemNetworth.reduce((acc, cur) => acc + (cur?.price ?? 0), 0);
 
           addToItemLore(output.backpack.at(-1), ["", `§7Total Value: §6${Math.round(totalValue).toLocaleString()} Coins §7(§6${formatNumber(totalValue)}§7)`]);
+          */
         }
       }
     }

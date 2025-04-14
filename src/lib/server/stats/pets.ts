@@ -3,7 +3,7 @@ import * as helper from "$lib/server/helper";
 import { NEU_CONSTANTS, NEU_ITEMS } from "$lib/server/helper/NotEnoughUpdates/parseNEURepository";
 import { formatNumber, uniqBy } from "$lib/shared/helper";
 import type { GetItemsItems, Member, Pet, Pets, ProcessedPet, ProcessedSkyblockPet, Profile } from "$types/global";
-import { getItemNetworth } from "skyhelper-networth";
+// import { getItemNetworth } from "skyhelper-networth";
 import { stripItems } from "./items/stripping";
 
 let getMaxPetIdsCache = {} as { lastUpdated: number; data: Record<string, number> };
@@ -419,9 +419,10 @@ export async function getPets(userProfile: Member, items: GetItemsItems, profile
     return {};
   }
 
+  /*
   for (const pet of pets) {
-    await getItemNetworth(pet, { cache: true, returnItemData: false });
-  }
+    // await getItemNetworth(pet, { cache: true, returnItemData: false });
+  }*/
 
   output.pets = getProfilePets(userProfile, pets) as unknown as ProcessedSkyblockPet[];
   output.missing = getMissingPets(userProfile, output.pets as unknown as ProcessedPet[], profile.game_mode) as unknown as ProcessedSkyblockPet[];

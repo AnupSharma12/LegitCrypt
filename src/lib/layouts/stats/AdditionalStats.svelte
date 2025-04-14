@@ -69,8 +69,8 @@
   <AdditionStat text="Fairy Souls" data={`${profile.stats.fairySouls.found} / ${profile.stats.fairySouls.total}`} asterisk={true}>
     {calculatePercentage(profile.stats.fairySouls.found, profile.stats.fairySouls.total)}% of fairy souls found.
   </AdditionStat>
-  <AdditionStat text="Networth" data={formatNumber(profile.stats.networth.networth)} asterisk={true}>
-    <div class="max-w-xs space-y-2 font-bold">
+  <AdditionStat text="Networth" data={formatNumber(profile.stats.networth.nonCosmeticNetworth)} asterisk={true}>
+    <div class="space-y-2 font-bold">
       <div>
         <h3 class="text-text/85">Networth</h3>
         <p class="text-text/80 font-medium italic">Networth calculations by SkyHelper.</p>
@@ -96,6 +96,18 @@
         Total Networth:
         <span class="text-text">
           {numberFormat(profile.stats.networth.networth, defaultPattern)} ({formatNumber(profile.stats.networth.networth)})
+        </span>
+      </p>
+
+      <p class="text-text/85">
+        Unsoulbound Non-Cosmetic Networth:
+        <span class="text-text">
+          {formatNumber(profile.stats.networth.unsoulboundNonCosmeticNetworth)}
+        </span>
+        <br />
+        Total Non-Cosmetic Networth:
+        <span class="text-text">
+          {numberFormat(profile.stats.networth.nonCosmeticNetworth, defaultPattern)} ({formatNumber(profile.stats.networth.nonCosmeticNetworth)})
         </span>
       </p>
     </div>

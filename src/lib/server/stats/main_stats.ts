@@ -1,36 +1,44 @@
 import type { GetItemsItems, Member, Profile } from "$types/global";
-import { getPreDecodedNetworth } from "skyhelper-networth";
+import { parseItems, ProfileNetworthCalculator } from "skyhelper-networth";
 import { FAIRY_SOULS } from "../constants/constants";
 
 export async function getMainStats(userProfile: Member, profile: Profile, items: GetItemsItems) {
-  // consolllle.log(ts);
-
   const bank = profile.banking?.balance ?? 0;
-  const networthOptions = {
-    onlyNetworth: true,
-    returnItemData: false,
-    cache: true,
-    v2Endpoint: true
-  };
+  const networthOptions = { onlyNetworth: true, includeItemData: false, cachePrices: true };
+  /*
+  'armor',
+  'equipment',
+  'wardrobe',
+  'inventory',
+  'enderchest',
+  'accessories',
+  'personal_vault',
+  'fishing_bag',
+  'potion_bag',
+  'sacks_bag',
+  'candy_inventory',
+  'carnival_mask_inventory',
+  'quiver',
+  'storage',
+  'museum',
+  'sacks',
+  'essence',
+  'pets'
+  */
+  const timeNowv2 = Date.now();
+  const newItems = await parseItems(userProfile, null);
+  newItems.museum = items.museumItems;
+  console.log(`Parsing items took ${Date.now() - timeNowv2}ms`);
 
-  const networthItems = {
-    armor: items?.armor?.armor ?? [],
-    equipment: items?.equipment?.equipment ?? [],
-    wardrobe: items?.wardrobe.flat() ?? [],
-    inventory: items?.inventory ?? [],
-    enderchest: items?.enderchest ?? [],
-    accessories: items?.talisman_bag ?? [],
-    personal_vault: items?.personal_vault ?? [],
-    storage: items?.backpack ? items?.backpack.concat(items?.backpack.map((item) => item.containsItems ?? []).flat()).flat() : [],
-    fishing_bag: items?.fishing_bag ?? [],
-    potion_bag: items?.potion_bag ?? [],
-    museum: items?.museumItems ?? []
-  };
+  const timeNow = Date.now();
+  const NetworthCalculator = ProfileNetworthCalculator.fromPreParsed(userProfile, newItems, bank);
+  const [networth, nonCosmeticNetworth] = await Promise.all([
+    // prettier-ignore
+    NetworthCalculator.getNetworth(networthOptions),
+    NetworthCalculator.getNonCosmeticNetworth(networthOptions)
+  ]);
 
-  const predecodedNetworth = await getPreDecodedNetworth(userProfile, networthItems, bank, networthOptions);
-  if (items) {
-    items.museumItems = [];
-  }
+  console.log(`Networth calculation took ${Date.now() - timeNow}ms`);
 
   return {
     joined: userProfile.profile?.first_join ?? 0,
@@ -42,6 +50,10 @@ export async function getMainStats(userProfile: Member, profile: Profile, items:
       found: userProfile.fairy_soul?.total_collected ?? 0,
       total: FAIRY_SOULS[profile.game_mode ?? "normal"] ?? FAIRY_SOULS["normal"]
     },
-    networth: predecodedNetworth
+    networth: {
+      ...networth,
+      nonCosmeticNetworth: nonCosmeticNetworth.networth,
+      unsoulboundNonCosmeticNetworth: nonCosmeticNetworth.unsoulboundNetworth
+    }
   };
 }

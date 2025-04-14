@@ -125,6 +125,8 @@ export type Inventory = {
   personal_vault_contents?: DecodedInventory;
   backpack_contents?: Record<string, DecodedInventory>;
   wardrobe_contents?: DecodedInventory;
+  shared_inventory?: SharedInventory;
+  sacks_counts?: Record<string, number>;
 };
 
 export type BagContents = {
@@ -133,6 +135,11 @@ export type BagContents = {
   fishing_bag?: DecodedInventory;
   sacks_bag?: DecodedInventory;
   quiver?: DecodedInventory;
+};
+
+export type SharedInventory = {
+  candy_inventory_contents?: DecodedInventory;
+  carnival_mask_inventory_contents?: DecodedInventory;
 };
 
 export type DecodedInventory = {
