@@ -69,45 +69,71 @@
   <AdditionStat text="Fairy Souls" data={`${profile.stats.fairySouls.found} / ${profile.stats.fairySouls.total}`} asterisk={true}>
     {calculatePercentage(profile.stats.fairySouls.found, profile.stats.fairySouls.total)}% of fairy souls found.
   </AdditionStat>
-  <AdditionStat text="Networth" data={formatNumber(profile.stats.networth.nonCosmeticNetworth)} asterisk={true}>
+  {#if profile.profile_id !== "1277d71f-3380-46e2-98d9-0c9fe4055f00"}
+    <AdditionStat text="Networth" data={formatNumber(profile.stats.networth.networth)} asterisk={true}>
+      <div class="space-y-2 font-bold">
+        <div>
+          <h3 class="text-text/85">Networth</h3>
+          <p class="text-text/80 font-medium italic">Networth calculations by SkyHelper.</p>
+        </div>
+        <div>
+          <ul class="[&_li]:text-text/85 [&_li_span]:text-text font-bold [&_li]:capitalize [&_li_span]:normal-case">
+            {#each Object.entries(profile.stats.networth.types) as [key, value], index (index)}
+              {#if value.total > 0}
+                <li>
+                  {key.replace(/_/g, " ")}:
+                  <span>
+                    {formatNumber(value.total)}
+                  </span>
+                </li>
+              {/if}
+            {/each}
+          </ul>
+        </div>
+        <p class="text-text/85">
+          Unsoulbound Networth:
+          <span class="text-text">
+            {formatNumber(profile.stats.networth.unsoulboundNetworth)}
+          </span>
+          <br />
+          Total Networth:
+          <span class="text-text">
+            {numberFormat(profile.stats.networth.networth, defaultPattern)} ({formatNumber(profile.stats.networth.networth)})
+          </span>
+        </p>
+      </div>
+    </AdditionStat>
+  {/if}
+
+  <AdditionStat text="Non-Cosmetic Networth" data={formatNumber(profile.stats.nonCosmeticNetworth.networth)} asterisk={true}>
     <div class="space-y-2 font-bold">
       <div>
-        <h3 class="text-text/85">Networth</h3>
+        <h3 class="text-text/85">Non-Cosmetic Networth</h3>
         <p class="text-text/80 font-medium italic">Networth calculations by SkyHelper.</p>
       </div>
       <div>
         <ul class="[&_li]:text-text/85 [&_li_span]:text-text font-bold [&_li]:capitalize [&_li_span]:normal-case">
-          {#each Object.entries(profile.stats.networth.types) as [key, value], index (index)}
-            <li>
-              {key.replace(/_/g, " ")}:
-              <span>
-                {formatNumber(value.total)}
-              </span>
-            </li>
+          {#each Object.entries(profile.stats.nonCosmeticNetworth.types) as [key, value], index (index)}
+            {#if value.total > 0}
+              <li>
+                {key.replace(/_/g, " ")}:
+                <span>
+                  {formatNumber(value.total)}
+                </span>
+              </li>
+            {/if}
           {/each}
         </ul>
       </div>
       <p class="text-text/85">
         Unsoulbound Networth:
         <span class="text-text">
-          {formatNumber(profile.stats.networth.unsoulboundNetworth)}
+          {formatNumber(profile.stats.nonCosmeticNetworth.unsoulboundNetworth)}
         </span>
         <br />
         Total Networth:
         <span class="text-text">
-          {numberFormat(profile.stats.networth.networth, defaultPattern)} ({formatNumber(profile.stats.networth.networth)})
-        </span>
-      </p>
-
-      <p class="text-text/85">
-        Unsoulbound Non-Cosmetic Networth:
-        <span class="text-text">
-          {formatNumber(profile.stats.networth.unsoulboundNonCosmeticNetworth)}
-        </span>
-        <br />
-        Total Non-Cosmetic Networth:
-        <span class="text-text">
-          {numberFormat(profile.stats.networth.nonCosmeticNetworth, defaultPattern)} ({formatNumber(profile.stats.networth.nonCosmeticNetworth)})
+          {numberFormat(profile.stats.nonCosmeticNetworth.networth, defaultPattern)} ({formatNumber(profile.stats.nonCosmeticNetworth.networth)})
         </span>
       </p>
     </div>

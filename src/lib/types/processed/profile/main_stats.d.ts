@@ -1,52 +1,4 @@
-interface NetworthResult {
-  /**
-   * The total networth of the player.
-   */
-  networth: number;
-  /**
-   * The total networth of the player without the soulbound items.
-   */
-  unsoulboundNetworth: number;
-  /**
-   * Whether the player has inventory API disabled or not.
-   */
-  noInventory: boolean;
-  /**
-   * Whether the non cosmetic items are included in the networth calculation.
-   */
-  isNonCosmetic: boolean;
-  /**
-   * The purse balance of the player.
-   */
-  purse: number;
-  /**
-   * The bank balance of the player.
-   */
-  bank: number;
-  /**
-   * The personal bank balance of the player.
-   */
-  personalBank: number;
-  /**
-   * The total networth of the player's inventories.
-   */
-  types: Record<Inventories, Inventory>;
-}
-
-type Inventories = "armor" | "equipment" | "wardrobe" | "inventory" | "enderchest" | "accessories" | "personal_vault" | "fishing_bag" | "potion_bag" | "sacks_bag" | "candy_inventory" | "carnival_mask_inventory" | "storage" | "museum" | "sacks" | "essence" | "pets" | "quiver";
-
-type Inventory = {
-  /**
-   * The total networth of the inventory.
-   */
-  total: number;
-  /**
-   * The total networth of the inventory without the soulbound items.
-   */
-  unsoulboundTotal: number;
-};
-
-type Items = Record<Inventories, object[]>;
+import type { NetworthResult } from "skyhelper-networth";
 
 export type MainStats = {
   joined: number;
@@ -58,8 +10,6 @@ export type MainStats = {
     found: number;
     total: number;
   };
-  networth: NetworthResult & {
-    nonCosmeticNetworth: number;
-    unsoulboundNonCosmeticNetworth: number;
-  };
+  networth: NetworthResult;
+  nonCosmeticNetworth: NetworthResult;
 };

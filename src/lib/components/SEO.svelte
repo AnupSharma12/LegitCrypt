@@ -47,7 +47,11 @@
     }
 
     if (profile.stats.networth.noInventory === false) {
-      output += `💸 Networth: ${formatNumber(profile.stats.networth.networth)}\n`;
+      if (profile.profile_id !== "1277d71f-3380-46e2-98d9-0c9fe4055f00") {
+        output += `💸 Networth: ${formatNumber(profile.stats.nonCosmeticNetworth.networth)}\n`;
+      } else {
+        output += `💸 Networth: ${formatNumber(profile.stats.networth.networth)}\n`;
+      }
     }
 
     if (profile.stats.purse !== undefined) {
