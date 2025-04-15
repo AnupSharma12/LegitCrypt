@@ -5,7 +5,7 @@ import { getEquipment } from "$lib/server/stats/items/equipment";
 import { processItems } from "$lib/server/stats/items/processing";
 import { getWardrobe } from "$lib/server/stats/items/wardrobe";
 import type { GetItemsItems, Member, MuseumRaw } from "$types/global";
-//  import { getItemNetworth } from "skyhelper-networth";
+// import { ItemNetworthCalculator } from "skyhelper-networth";
 // import { addToItemLore, formatNumber } from "../helper";
 import { sendWebhookMessage } from "../lib";
 import { getPets, getSkilllTools, getWeapons } from "./items/category";
@@ -88,13 +88,16 @@ export async function getItems(userProfile: Member, userMuseum: MuseumRaw | null
             containsItems: value
           });
 
-          /*const filteredItems = value.filter((item) => item.tag || item.exp);
-          const itemNetworthPromises = filteredItems.map((item) => getItemNetworth(item, { cache: true })).concat(getItemNetworth(backpackIcon));
+          /*
+          const timeNow = Date.now();
+          const filteredItems = value.filter((item) => item.tag || item.exp);
+          const itemNetworthPromises = filteredItems.map((item) => new ItemNetworthCalculator(item).getNetworth({ cachePrices: true, includeItemData: false })).concat(new ItemNetworthCalculator(backpackIcon).getNetworth({ cachePrices: true, includeItemData: false }));
           const itemNetworth = await Promise.all(itemNetworthPromises);
           const totalValue = itemNetworth.reduce((acc, cur) => acc + (cur?.price ?? 0), 0);
+          console.log(`Backpack ${backpackIndex} in ${Date.now() - timeNow}ms`);
 
           addToItemLore(output.backpack.at(-1), ["", `§7Total Value: §6${Math.round(totalValue).toLocaleString()} Coins §7(§6${formatNumber(totalValue)}§7)`]);
-          */
+        */
         }
       }
     }
